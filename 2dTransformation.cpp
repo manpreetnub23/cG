@@ -63,6 +63,7 @@ int main()
 
     // Rotate the object (45 degrees)
     float theta = M_PI / 4; // 45 degrees in radians
+    std::cout << theta << std::endl;
     for (int i = 0; i < n; i++)
     {
         rotate(object[i], theta);
