@@ -24,12 +24,18 @@ void rotate(Point &point, float theta)
     point.x = point.x * cos(theta) - point.y * sin(theta);
     point.y = point.y * sin(theta) + temp * cos(theta);
 }
+void shear(Point &p, float shx, float shy)
+{
+    float tempX = p.x;
+    p.x += shx * p.y;
+    p.y += shy * tempX;
+}
 
 int main()
 {
     Point point[4];
-    int choice, tx, ty, sx, sy;
-    float theta;
+    float theta, tx, ty, sx, sy, shx, shy;
+    int choice;
 
     std::cout << "Enter coordinates of 4 points (x y for each point):" << std::endl;
     for (int i = 0; i < 4; ++i)
@@ -40,7 +46,7 @@ int main()
 
     do
     {
-        std::cout << "\nMenu:\n1. Translate\n2. Scale\n3. Rotate\n4. Exit\nEnter your choice: ";
+        std::cout << "\nMenu:\n1. Translate\n2. Scale\n3. Rotate\n4. Shear\n5. Exit\nEnter your choice: ";
         std::cin >> choice;
 
         switch (choice)
@@ -74,8 +80,17 @@ int main()
             }
             std::cout << "After rotation:" << std::endl;
             break;
-
         case 4:
+            std::cout << "Enter shear in x and y direction : " << std::endl;
+            std::cin >> shx >> shy;
+            for (int i = 0; i < 4; i++)
+            {
+                shear(point[i], shx, shy);
+            }
+            std::cout << "After shearing :" << std::endl;
+            break;
+
+        case 5:
             std::cout << "Exiting..." << std::endl;
             break;
 
@@ -85,15 +100,11 @@ int main()
         }
 
         // Print points after each operation
-        if (choice != 4)
+        for (int i = 0; i < 4; i++)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                std::cout << "Point " << i + 1 << ": (" << point[i].x << ", " << point[i].y << ")" << std::endl;
-            }
+            std::cout << "Point " << i + 1 << ": (" << point[i].x << ", " << point[i].y << ")" << std::endl;
         }
-
-    } while (choice != 4);
+    } while (choice != 5);
 
     return 0;
 }
